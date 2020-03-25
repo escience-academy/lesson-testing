@@ -1,0 +1,23 @@
+Things to update or implement
+
+- mention other languages; occasional example (Julia, C/C++, Rust tests built-in)
+
+- point out contracts section is not often used; just the occasional if-test, and nowadays typing.
+
+- warn about catch-all exceptions
+  - exceptions are good: don't catch them if you can't handle them
+  - crash where needed (also for languages without exceptions)
+
+- other practical examples to test, with danger for unseen errors if not tested for:
+  - integer overflow
+  - nans
+
+- a bit of TDD may also help develop your API better
+
+- bit clearer on regression tests (and unit/integration tests): test if you change the code!
+
+- replace travis with GitHub actions?
+
+- code coverage
+
+- for reproduciblity: versioning of dependencies (in setup.py/requirements.txt/...), as well as your own code. This prevents newer version of dependencies messing up your code (and testing), until you have found time to bring your code up to date.
