@@ -15,9 +15,11 @@ keypoints:
 - "`s` is a purposefully skipped test"
 ---
 
-We created a suite of tests for our mean function, but it was annoying to run
-them one at a time. It would be a lot better if there were some way to run them
-all at once, just reporting which tests fail and which succeed.
+We created a suite of tests for our mean function, but it can be annoying to run
+them one at a time. In particular, if one test fails and causes an exception, the next tests after that will not automatically run.
+It would be a lot better if there were some way to run them all at once, just reporting which tests fail and which succeed.
+
+Firstly, install the PyTest testing framework: `python -m pip install pytest`.
 
 Thankfully, that exists. Recall our tests:
 
@@ -37,16 +39,9 @@ def test_zero():
     assert obs == exp
 
 def test_double():
-    # This one will fail in Python 2
     num_list=[1,2,3,4]
     obs = mean(num_list)
     exp = 2.5
-    assert obs == exp
-
-def test_long():
-    big = 100000000
-    obs = mean(range(1,big))
-    exp = big/2.0
     assert obs == exp
 
 def test_complex():
@@ -60,16 +55,16 @@ def test_complex():
 {: .python}
 
 Once these tests are written in a file called `test_mean.py`, the command
-`pytest` can be run on the terminal or command line from the directory containing the tests (note that you'll have to use `py.test` for older versions of the `pytest` package):
+`pytest` can be run on the terminal or command line from the directory containing the tests (`python -m pytest` also works, if you want to ensure pytest uses the correct Python executable):
 
 ~~~
 $ pytest
 ~~~
 {: .bash}
 ~~~
-collected 5 items
+collected 4 items
 
-test_mean.py ....F
+test_mean.py ...F
 
 ================================== FAILURES ===================================
 ________________________________ test_complex _________________________________
@@ -79,18 +74,20 @@ ________________________________ test_complex _________________________________
         # the arithmetic mean of complex numbers is meaningless
         num_list = [2 + 3j, 3 + 4j, -32 - 2j]
         obs = mean(num_list)
+        print(obs)
         exp = NotImplemented
->       assert obs == exp
+>       assert obs == exp, "the arithmetic mean of complex number numbers is meaningless"
+E       AssertionError: the arithmetic mean of complex number numbers is meaningless
 E       assert (-9+1.6666666666666667j) == NotImplemented
 
-test_mean.py:34: AssertionError
+test_mean.py:28: AssertionError
 ===================== 1 failed, 4 passed in 2.71 seconds ======================
 ~~~
 {: .output}
 
 In the above case, the pytest package 'sniffed-out' the tests in the
-directory and ran them together to produce a report of the sum of the files and
-functions matching the regular expression `[Tt]est[-_]*`.
+directory, by looking recursively looking for files named `[Tt]est_*.py` or `[Tt]est-*.py`, and then run the functions inside those files called `[Tt]est_*`.
+It runs them together to produce a report of the sum of all executed files and functions.
 
 The major benefit a testing framework provides is exactly that, a utility to find and run the
 tests automatically. With pytest, this is the command-line tool called
@@ -109,20 +106,25 @@ skipped tests (because the test is not applicable on your system) or a `x` for a
 failure (because the developers could not fix it promptly). After the dots, pytest
 will print summary information.
 
-Without changing the tests, alter the mean.py file from the previous section until it passes.
+Without changing the tests, alter the mean.py file from the previous section until it passes. 
+> Hint
+>
+> A combination of the `any()` and `isinstance()` functions, and a list comprehension or generator expression may do the trick.
+{: .callout}
+
 When it passes, `pytest` will produce results like the following:
 
 ~~~
 $ pytest
 ~~~
-{: .bash}
+{: .shell}
 
 ~~~
-collected 5 items
+collected 4 items
 
-test_mean.py .....
+test_mean.py ....
 
-========================== 5 passed in 2.68 seconds ===========================
+========================== 4 passed in 1.14 seconds ===========================
 ~~~
 {: .output}
 
@@ -142,8 +144,7 @@ test_mean.py .....
 >
 > test_mean.py::test_ints PASSED
 > test_mean.py::test_zero PASSED
-> test_mean.py::test_double PASSED
-> test_mean.py::test_long PASSED
+> test_mean.py::test_float PASSED
 > test_mean.py::test_complex PASSED
 >
 > ========================== 5 passed in 2.57 seconds ===========================
@@ -156,6 +157,19 @@ As we write more code, we would write more tests, and pytest would produce
 more dots.  Each passing test is a small, satisfying reward for having written
 quality scientific software. Now that you know how to write tests, let's go
 into what can go wrong.
+
+> Output from functions when running pytest
+>
+> Pytest suppresses all output from your tested functions: it ignores stdout, and tests for the return values from functions. If you do want to see output during testing, use the `-s` option.
+{: .callout}
+
+> Running a specifc test
+>
+> During development, you may not want to run all tests all the time.
+> Sometimes, you are just developing a new test, which is the only test you want to run.
+> `pytest` takes a `-k` option with an argument that is a case-insenstive string, which is matched to the file or function name.
+> For example, `pytest -k float` will only run the `test_float` test.
+{: .callout}
 
 
 {% include links.md %}

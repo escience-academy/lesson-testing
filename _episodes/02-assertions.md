@@ -50,17 +50,44 @@ def mean(num_list):
 ~~~
 {: .python}
 
+or, shorter and more Pythonic (you don't need the comparison, just a
+truthy or falsey value):
+
+~~~
+def mean(num_list):
+    assert num_list
+    return sum(num_list)/len(num_list)
+~~~
+{: .python}
+
+
 The advantage of assertions is their ease of use. They are rarely more than one
 line of code. The disadvantage is that assertions halt execution
 indiscriminately and the helpfulness of the resulting error message is usually
 quite limited.
 
+> ## A better error message
+>
+> Assertions in Python can take a string after the assertion itself (separated with a space), which can be used as a more informative error message:
+def mean(num_list):
+    assert len(num_list) != 0, "empty input list"
+    return sum(num_list)/len(num_list)
+{: .callout}
+
+
 Also, input checking may require decending a rabbit hole of exceptional cases.
 What happens when the input provided to the mean function is a string, rather
 than a list of numbers?
 
-1. Open a [Jupyter Notebook](https://jupyter.org/)
-2. Create the following function:
+0. Optional: install and open a Jupyter notebook:
+~~~
+python -m pip install notebook
+python -m jupyter notebook
+~~~
+{: .shell}
+which will install and open a notebook in your browser. Use control-C in the terminal to stop the notebook.
+
+1. Create the following function, in a script (`.py` file), or a Jupyter notebook cell.
 
 ~~~
 def mean(num_list):
@@ -81,7 +108,7 @@ def mean(num_list):
 > that arise with floating point arithmetic. Using the assert keyword, how could
 > you test whether some value is almost the same as another value?
 >
-> - My package, mynum, provides the number a.
+> - A package, mynum, provides the number a.
 > - Use the `assert` keyword to check whether the number a is greater than 2.
 > - Use the `assert` keyword to check that a is equal to 2 within an error of 0.003.
 {: .callout}
@@ -92,6 +119,9 @@ from mynum import a
 # 0.003 assertion here
 ~~~
 {: .python}
+
+The examples below use NumPy. It is likely already installed, but
+otherwise, you can install it with `python -m pip install numpy`.
 
 ## NumPy
 

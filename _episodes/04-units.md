@@ -28,7 +28,7 @@ more unit-like than long ones.
 Thus what reasonably constitutes a code unit typically varies from project to
 project and language to language.  A good guideline is that if the code cannot
 be made any simpler logically (you cannot split apart the addition operator) or
-practically (a function is self-contained and well defined), then it is a unit. 
+practically (a function is self-contained and well defined), then it is a unit.
 
 > ## Functions are Like Paragraphs
 >
@@ -37,11 +37,11 @@ practically (a function is self-contained and well defined), then it is a unit.
 > shouldn't be longer than paragraphs.
 > Robert C. Martin, the author of "Clean Code" said : "The first rule of
 > functions is that _they should be small_. The second rule of functions is that
-> _they should be smaller than that_." 
+> _they should be smaller than that_."
 {: .callout}
 
 The desire to unit test code often has the effect of encouraging both the
-code and the tests to be as small, well-defined, and modular as possible.  
+code and the tests to be as small, well-defined, and modular as possible.
 In Python, unit tests typically take the form of test functions that call and make
 assertions about methods and functions in the code base.  To run these test
 functions, a test framework is often required to collect them together. For
@@ -55,7 +55,7 @@ Unit tests are typically made of three pieces, some set-up, a number of
 assertions, and some tear-down. Set-up can be as simple as initializing the
 input values or as complex as creating and initializing concrete instances of a
 class. Ultimately, the test occurs when an assertion is made, comparing the
-observed and expected values. For example, let us test that our mean function 
+observed and expected values. For example, let us test that our mean function
 successfully calculates the known value for a simple list.
 
 Before running the next code, save your `mean` function to a file called mean.py in the working directory.
@@ -88,7 +88,7 @@ def test_ints():
 ~~~
 {: .python}
 
-The test above: 
+The test above:
 - sets up the input parameters (the simple list [1, 2, 3, 4, 5]);
 - collects the observed result;
 - declares the expected result (calculated with our human brain);
@@ -114,17 +114,10 @@ def test_zero():
     exp = 3
     assert obs == exp
 
-def test_double():
-    # This one will fail in Python 2
+def test_float():
     num_list=[1,2,3,4]
     obs = mean(num_list)
     exp = 2.5
-    assert obs == exp
-
-def test_long():
-    big = 100000000
-    obs = mean(range(1,big))
-    exp = big/2.0
     assert obs == exp
 
 def test_complex():
@@ -133,11 +126,11 @@ def test_complex():
     num_list = [2 + 3j, 3 + 4j, -32 - 2j]
     obs = mean(num_list)
     exp = NotImplemented
-    assert obs == exp
+    assert obs == exp, "the arithmetic mean of complex number numbers is meaningless"
 ~~~
 {: .python}
 
-Use Jupyter Notebook to import the `test_mean` package and run each test like this:
+Use the Jupyter notebook or another script to import the `test_mean` package and run each test like this:
 
 ~~~
 from test_mean import *
@@ -150,8 +143,10 @@ test_complex()  ## Please note that this one might fail. You'll get an error mes
 ~~~
 {: .python}
 
+In case you were wondering: Python will calculate the arithmetic mean of a list of complex numbers as the (separate) means of the rational and irrational parts; we have simply defined ourselves that we don't want it to exist.
+And, of course, we should have implemented this in the `mean` function instead, by testing for complex numbers and then raising a `NotImplemented` exception.
+We'll come back to that.
 
-Well, **that** was tedious.
 
 
 {% include links.md %}

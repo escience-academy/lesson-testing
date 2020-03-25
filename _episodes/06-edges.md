@@ -116,6 +116,10 @@ consider the case of the function `(sin(x) / x) * (sin(y) / y)`, presented here:
 import numpy as np
 
 def sinc2d(x, y):
+    # for convenience, we compare directly to zero
+	# while 0.0 == 0.0 always, if `x` or `y` may be the result of a calculation,
+	# don't do this! Compare to e.g. `sys.float_info.epsilon`, or
+	# `np.finfo(x.dtype).resolution` instead.
     if x == 0.0 and y == 0.0:
         return 1.0
     elif x == 0.0:
@@ -171,14 +175,11 @@ def test_edge_y():
 > 4. Run all of the tests using `pytest` on the command line.
 {: .checklist}
 
-Corner cases can be even trickier to find and debug than edge cases because of their
-increased complexity.  This complexity, however, makes them even more important to
-explicitly test.
+Corner cases can be even trickier to find and debug than edge cases because of their increased complexity.
+This complexity, however, makes them even more important to explicitly test.
 
-Whether internal, edge, or corner cases, we have started to build
-up a classification system for the tests themselves. In the following sections,
-we will build this system up even more based on the role that the tests have
-in the software architecture.
+Whether internal, edge, or corner cases, we have started to build up a classification system for the tests themselves.
+In the following sections, we will build this system up even more based on the role that the tests have in the software architecture.
 
 
 {% include links.md %}

@@ -133,19 +133,16 @@ However, if the test fails because the physics is wrong, then the developer shou
 fix the latest version of the code as soon as possible.
 
 Regression tests can and do catch failures that integration and unit tests miss.
-Regression tests act as an automated short-term
-memory for a project.  Unfortunately, each project will have a slightly different
-approach to regression testing based on the needs of the software. Testing
-frameworks provide tools to help with building regression tests but do not offer
+Regression tests act as an automated short-term memory for a project.
+Unfortunately, each project will have a slightly different approach to regression testing based on the needs of the software.
+Testing frameworks provide tools to help with building regression tests but do not offer
 any sophistication beyond what has already been seen in this chapter.
 
 Depending on the kind of project, regression tests may or may not be needed.
 They are only truly needed if the project is a simulator.
-Having a suite of
-regression tests that cover the range of physical possibilities is vital
+Having a suite of regression tests that cover the range of physical possibilities is vital
 to ensuring that the simulator still works.
-In most other cases, you can get away with only having unit and integration
-tests.
+In most other cases, you can get away with only having unit and integration tests.
 
 While more test classifications exist for more specialized situations, we have covered
 what you will need to know for almost every situation in computational physics.

@@ -13,6 +13,7 @@ keypoints:
 - "TDD is not for everyone"
 - "TDD requires vigilance for success"
 ---
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
 
 Test-driven Development (TDD) takes the workflow of writing code and writing
 tests and turns it on its head. TDD is a software development process where you
@@ -149,10 +150,20 @@ def test_std5():
 ~~~
 {: .python}
 
+$$ X^2 $$
+
 At this point, we may as well try to implement a generic standard deviation
 function. Recall:
 
-![Standard Deviation](../img/std.png)
+$$ \sigma = \sqrt{ \frac{ \sum ( x - \bar{x} )^2 }{ N } } $$
+
+where
+
+- $$ \sigma = $$ the standard deviation
+- $$ x = $$ each value in the population
+- $$ \bar{x} = $$ mean of the values
+- $$ N = $$ = the number of values
+
 
 We would spend more time trying to come up with clever
 approximations to the standard deviation than we would spend actually coding it.
